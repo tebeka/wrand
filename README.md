@@ -1,6 +1,7 @@
 # wrand - Weighted Random for Go
 
 [![Test](https://github.com/tebeka/wrand/actions/workflows/go.yml/badge.svg)](https://github.com/tebeka/wrand/actions/workflows/go.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/tebeka/wrand.svg)](https://pkg.go.dev/github.com/tebeka/wrand)
 
 
 ## Example
