@@ -1,4 +1,4 @@
-# wrand - Weighted Random
+# wrand - Weighted Random for Go
 
 [![Test](https://github.com/tebeka/wrand/actions/workflows/go.yml/badge.svg)](https://github.com/tebeka/wrand/actions/workflows/go.yml)
 
