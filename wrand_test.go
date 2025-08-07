@@ -1,10 +1,10 @@
 package wrand_test
 
 import (
-	"math/rand"
+	"math"
+	"math/rand/v2"
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	"github.com/tebeka/wrand"
 )
 
@@ -21,9 +21,11 @@ func TestWRand(t *testing.T) {
 		total += float64(v)
 	}
 
-	r := rand.New(rand.NewSource(9))
+	r := rand.New(rand.NewPCG(9, 0))
 	rw, err := wrand.New(weights, r)
-	require.NoError(t, err)
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	counts := make(map[string]int)
 	const size = 1_000_000
@@ -34,6 +36,8 @@ func TestWRand(t *testing.T) {
 	for s, c := range counts {
 		actual := float64(c) / size
 		wanted := float64(weights[s]) / total
-		require.InDelta(t, wanted, actual, 0.05)
+		if math.Abs(wanted-actual) > 0.05 {
+			t.Errorf("weight for %s: wanted %f, got %f (diff %f)", s, wanted, actual, math.Abs(wanted-actual))
+		}
 	}
 }

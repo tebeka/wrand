@@ -3,7 +3,7 @@ package wrand
 
 import (
 	"fmt"
-	"math/rand"
+	"math/rand/v2"
 	"slices"
 	"time"
 )
@@ -36,7 +36,7 @@ func New[T comparable](weights map[T]int, r *rand.Rand) (WRand[T], error) {
 	}
 
 	if r == nil {
-		r = rand.New(rand.NewSource(time.Now().Unix()))
+		r = rand.New(rand.NewPCG(uint64(time.Now().Unix()), 0))
 	}
 
 	rw := WRand[T]{
@@ -50,7 +50,7 @@ func New[T comparable](weights map[T]int, r *rand.Rand) (WRand[T], error) {
 
 // Rand returns random element from the weighted population.
 func (rw WRand[T]) Rand() T {
-	n := rw.r.Intn(rw.n)
+	n := rw.r.IntN(rw.n)
 	i, _ := slices.BinarySearch(rw.totals, n)
 	// TODO: Should it differ if found?
 	return rw.values[i]
